@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     public Transform orientation;
-    private TextMeshProUGUI speedText;
+    //private TextMeshProUGUI speedText; CAN BE REMOVED
 
     float horInput;
     float vertInput;
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        speedText = GameObject.Find("SpeedText").GetComponent<TextMeshProUGUI>();
+        //speedText = GameObject.Find("SpeedText").GetComponent<TextMeshProUGUI>(); CAN BE REMOVED
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector3(0, 0, 0);
         }
-        speedText.text = "Speed: " + rb.velocity.magnitude;
+        //speedText.text = "Speed: " + rb.velocity.magnitude; CAN BE REMOVED
     }
 
     private void SpeedControl()
