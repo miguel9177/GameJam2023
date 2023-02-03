@@ -9,6 +9,7 @@ public class GrabObjectsPhysics : MonoBehaviour
     private enum State { idle, GrabbingObject}
 
     [Header("Components")]
+    public Camera playerCam;
     public Rigidbody grabableObjectRigidBody;
     public Collider grabableObjectCollider;
     public Rigidbody playerRigidBody;
@@ -16,6 +17,8 @@ public class GrabObjectsPhysics : MonoBehaviour
     public Transform parentOfGrabbedObjects;
 
     [Header("Data")]
+    public float objectMovementSpeed = 90;
+    private Vector3 grabbedObjectRot;
     private State state;
 
     private void Start()
@@ -23,7 +26,7 @@ public class GrabObjectsPhysics : MonoBehaviour
         InputManager.Instance.OnPressedE += OnPressedE;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         CallFunctionsDependingOnState();
     }
@@ -55,6 +58,8 @@ public class GrabObjectsPhysics : MonoBehaviour
     private void GrabObject()
     {
         state = State.GrabbingObject;
+        grabbedObjectRot = grabableObjectRigidBody.transform.eulerAngles;
+        grabableObjectRigidBody.useGravity = false;
         Physics.IgnoreCollision(grabableObjectCollider, playerCollider, true);
     }
 
@@ -62,12 +67,27 @@ public class GrabObjectsPhysics : MonoBehaviour
     {
         state = State.idle;
         Physics.IgnoreCollision(grabableObjectCollider, playerCollider, false);
+        grabableObjectRigidBody.useGravity = true;
     }
 
     private void GrabbingObjectPhysicsUpdate()
     {
         //grabableObject.transform.parent = parentOfGrabbedObjects.transform;
-        grabableObjectRigidBody.transform.localPosition = parentOfGrabbedObjects.position;
-        grabableObjectRigidBody.transform.localRotation = parentOfGrabbedObjects.rotation;
+        Vector3 newPos = Vector3.Lerp(grabableObjectRigidBody.transform.position, parentOfGrabbedObjects.position, Time.deltaTime * objectMovementSpeed);
+        grabableObjectRigidBody.MovePosition(newPos);
+        grabableObjectRigidBody.MoveRotation(Quaternion.LookRotation(playerCam.transform.forward));
+
+        //Vector3 direction = transform.position - grabableObjectRigidBody.transform.position;
+        //grabableObjectRigidBody.transform.eulerAngles = grabbedObjectRot;
+        //float distance = Vector3.Distance(transform.position, grabableObjectRigidBody.transform.position);
+        //if (distance > 0.1f)
+        //{
+        //    grabableObjectRigidBody.velocity = direction.normalized * objectMovementSpeed;
+        //    grabableObjectRigidBody.rotation = Quaternion.LookRotation(playerCam.transform.forward);
+        //}
+        //else
+        //{
+        //    grabableObjectRigidBody.velocity = Vector3.zero;
+        //}
     }
 }
