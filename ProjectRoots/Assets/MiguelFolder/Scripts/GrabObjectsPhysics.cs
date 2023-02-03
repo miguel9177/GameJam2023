@@ -10,20 +10,21 @@ public class GrabObjectsPhysics : MonoBehaviour
 
     [Header("Components")]
     public Camera playerCam;
-    public Rigidbody grabableObjectRigidBody;
-    public Collider grabableObjectCollider;
-    public Rigidbody playerRigidBody;
+    public PlayerCursor playerCursor;
     public Collider playerCollider;
-    public Transform parentOfGrabbedObjects;
+    public GameObject playerGrabLocation;
 
     [Header("Data")]
     public float objectMovementSpeed = 90;
-    private Vector3 grabbedObjectRot;
+    //private Vector3 grabbedObjectRot;
     private State state;
+
+    private GrabableItem currentGrabedItem;
 
     private void Start()
     {
-        InputManager.Instance.OnPressedE += OnPressedE;
+        playerCursor.OnGrabbedItem += GrabObject;
+        playerCursor.OnDroppedItem += DropGrabedObject;
     }
 
     private void FixedUpdate()
@@ -43,51 +44,27 @@ public class GrabObjectsPhysics : MonoBehaviour
         }
     }
 
-    private void OnPressedE()
-    {
-        if(state == State.GrabbingObject)
-        {
-            DropGrabedObject();
-        }
-        else
-        {
-            GrabObject();
-        }
-    }
-
-    private void GrabObject()
+    private void GrabObject(GrabableItem item)
     {
         state = State.GrabbingObject;
-        grabbedObjectRot = grabableObjectRigidBody.transform.eulerAngles;
-        grabableObjectRigidBody.useGravity = false;
-        Physics.IgnoreCollision(grabableObjectCollider, playerCollider, true);
+        currentGrabedItem = item;
+        currentGrabedItem.rb.useGravity = false;
+        for(int i = 0; i < currentGrabedItem.coll.Length; i++)
+            Physics.IgnoreCollision(currentGrabedItem.coll[i], playerCollider, true);
     }
 
     private void DropGrabedObject()
     {
         state = State.idle;
-        Physics.IgnoreCollision(grabableObjectCollider, playerCollider, false);
-        grabableObjectRigidBody.useGravity = true;
+        currentGrabedItem.rb.useGravity = true;
+        for (int i = 0; i < currentGrabedItem.coll.Length; i++)
+            Physics.IgnoreCollision(currentGrabedItem.coll[i], playerCollider, false);
     }
 
     private void GrabbingObjectPhysicsUpdate()
     {
-        //grabableObject.transform.parent = parentOfGrabbedObjects.transform;
-        Vector3 newPos = Vector3.Lerp(grabableObjectRigidBody.transform.position, parentOfGrabbedObjects.position, Time.deltaTime * objectMovementSpeed);
-        grabableObjectRigidBody.MovePosition(newPos);
-        grabableObjectRigidBody.MoveRotation(Quaternion.LookRotation(playerCam.transform.forward));
-
-        //Vector3 direction = transform.position - grabableObjectRigidBody.transform.position;
-        //grabableObjectRigidBody.transform.eulerAngles = grabbedObjectRot;
-        //float distance = Vector3.Distance(transform.position, grabableObjectRigidBody.transform.position);
-        //if (distance > 0.1f)
-        //{
-        //    grabableObjectRigidBody.velocity = direction.normalized * objectMovementSpeed;
-        //    grabableObjectRigidBody.rotation = Quaternion.LookRotation(playerCam.transform.forward);
-        //}
-        //else
-        //{
-        //    grabableObjectRigidBody.velocity = Vector3.zero;
-        //}
+        Vector3 newPos = Vector3.Lerp(currentGrabedItem.transform.position, playerGrabLocation.transform.position, Time.deltaTime * objectMovementSpeed);
+        currentGrabedItem.rb.MovePosition(newPos);
+        currentGrabedItem.rb.MoveRotation(Quaternion.LookRotation(playerCam.transform.forward));
     }
 }

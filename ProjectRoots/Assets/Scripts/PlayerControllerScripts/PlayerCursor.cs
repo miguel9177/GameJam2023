@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,21 +15,47 @@ public class PlayerCursor : MonoBehaviour
     public float raycastDistance;
     public LayerMask grabableObjectMask;
 
+    [Header("Behaviour")]
+    private RaycastHit hit;
+
+    private bool grabbingObject = false;
+
+    #region Events
+    public Action<GrabableItem> OnGrabbedItem;
+    public Action OnDroppedItem;
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        InputManager.Instance.OnPressedE += OnPressedE;    
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnPressedE()
     {
+        if (!grabbingObject)
+            TryGrabItem();
+        else
+        {
+            OnDroppedItem?.Invoke();
+            grabbingObject = false;
+        }
+    }
 
+    private void TryGrabItem()
+    {
+        if(hit.transform != null)
+        {
+            if(hit.transform.TryGetComponent(out GrabableItem grabItem_))
+            {
+                OnGrabbedItem?.Invoke(grabItem_);
+                grabbingObject = true;
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance, grabableObjectMask))
         {
@@ -37,12 +64,7 @@ public class PlayerCursor : MonoBehaviour
         else
         {
             cursor.sprite = cursorBlack;
-        }
-
-        //debug
-        //Debug.DrawRay(transform.position, transform.forward * 10000000, Color.red);
-        //Debug.Log("Did not Hit");
-        
+        }        
     }
 
    
