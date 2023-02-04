@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public bool isOnPast = true;
+    public bool isOnPast;
 
     private void Awake()
     {
@@ -24,17 +24,23 @@ public class GameManager : MonoBehaviour
 
     #region Events
     //if false go to future, if true go to past
-    public Action<bool> rewindButton;
+    public Action<bool> OnTimeTravel;
     #endregion
 
     private void Start()
     {
         InputManager.Instance.OnPressedR += TimeTravel;
+        Invoke("LateStart", 0.1f);
+    }
+
+    private void LateStart()
+    {
+        OnTimeTravel?.Invoke(isOnPast);
     }
 
     private void TimeTravel()
     {
         isOnPast = !isOnPast;
-        rewindButton?.Invoke(isOnPast);
+        OnTimeTravel?.Invoke(isOnPast);
     }
 }
