@@ -48,8 +48,8 @@ public class GrabObjectsPhysics : MonoBehaviour
     {
         if (item.gameObject.TryGetComponent(out ItemTimeline itemTimeLine) )
         {
-            if (!itemTimeLine.isGrabbable) {
-
+            //if (!itemTimeLine.isGrabbable) {
+            if(itemTimeLine.timeline == ItemTimeline.Timeline.Past && !GameManager.Instance.isOnPast) { 
                 return;
             
             }

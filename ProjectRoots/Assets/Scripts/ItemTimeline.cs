@@ -8,6 +8,6 @@ public class ItemTimeline : MonoBehaviour
     public enum Timeline { Future, Past};
 
     [SerializeField] public Timeline timeline;
-    [SerializeField] public bool isGrabbable = false;
+    
 
 }
