@@ -12,6 +12,8 @@ public class PlayerCamera : MonoBehaviour
     private float rotX;
     private float rotY;
 
+    public static bool stopWorking = false;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -20,6 +22,10 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
+        if (stopWorking)
+            return;
+
+        
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
 

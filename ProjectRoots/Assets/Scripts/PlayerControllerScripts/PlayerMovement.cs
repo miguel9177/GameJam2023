@@ -24,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
     //private TextMeshProUGUI speedText; CAN BE REMOVED
 
+    public static bool stopWorking = false;
+
+
     float horInput;
     float vertInput;
 
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        if(stopWorking) return;
         //ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f, WhatIsGround);
 
@@ -60,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (stopWorking) return;
         MovePlayer();
     }
 
