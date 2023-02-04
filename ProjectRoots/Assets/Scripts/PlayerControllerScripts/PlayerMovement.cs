@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     public Transform orientation;
-    //private TextMeshProUGUI speedText; CAN BE REMOVED
 
     public static bool stopWorking = false;
 
@@ -34,14 +33,24 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    [Header("Sound")]
+    public AudioSource footSteps;
+    //Play the music
+    bool m_Play;
+    bool toggle_;
+
+
     private void Start()
     {
-        //speedText = GameObject.Find("SpeedText").GetComponent<TextMeshProUGUI>(); CAN BE REMOVED
-
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
         grounded = true;
+
+        //Fetch the AudioSource from the GameObject 
+        //Ensure the toggle is set to true for the music to play at start-up
+        m_Play = true;
+
     }
     private void Update()
     {
@@ -59,6 +68,21 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             rb.drag = 0;
+        }
+
+        
+        if (m_Play == true && toggle_ == false)
+        {
+            
+            footSteps.Play();  
+            toggle_ = true;
+        }
+
+        
+        if (m_Play == false && toggle_ == true)
+        {
+            footSteps.Stop();
+            toggle_= false;
         }
     }
 
@@ -82,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-
+        
 
     }
 
@@ -101,13 +125,19 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
 
+        
+
 
         // limit stop speed
         if (rb.velocity.magnitude < 0.001)
         {
             rb.velocity = new Vector3(0, 0, 0);
+            m_Play = false;
         }
-        //speedText.text = "Speed: " + rb.velocity.magnitude; CAN BE REMOVED
+        else
+        {
+            m_Play= true;
+        }
     }
 
     private void SpeedControl()
