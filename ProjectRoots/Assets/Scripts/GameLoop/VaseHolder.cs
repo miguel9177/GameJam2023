@@ -5,10 +5,11 @@ using UnityEngine;
 public class VaseHolder : MonoBehaviour
 {
     public GameObject vaseHolder;
-    public GameObject dropItem;
+    public Rigidbody dropItem;
     public ItemTimeline Vase;
-    
 
+    public float dropItemForceSpeed = 2f;
+    public float timeToWaitForObjectToFall = 1f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Vase")
@@ -21,6 +22,15 @@ public class VaseHolder : MonoBehaviour
                 rb_.velocity = new Vector3(0f, 0f, 0f);
                 rb_.angularVelocity = new Vector3(0f, 0f, 0f);
             }
+            dropItem.isKinematic = false;
+            dropItem.useGravity = true;
+            StartCoroutine(DestroyVase());
         }
+    }
+
+    private IEnumerator DestroyVase()
+    {
+        yield return new WaitForSeconds(timeToWaitForObjectToFall);
+        dropItem.AddForce(Vector3.right * dropItemForceSpeed, ForceMode.VelocityChange);
     }
 }

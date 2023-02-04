@@ -18,10 +18,19 @@ public class BreakableObject : MonoBehaviour
     public float assembleSpeed = 1;
     public List<BreakableParts> allBreakableParts;
     public Collider objectColl;
+    public Collider objectToDestroyVase;
+
+    private bool acting = false;
 
     private void Start()
     {
         DisableBreakablePartsCollisions();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider == objectToDestroyVase)
+            BreakObject();
     }
 
     [ContextMenu("BreakObject")]
@@ -46,6 +55,10 @@ public class BreakableObject : MonoBehaviour
 
     private IEnumerator AssembleObjectCoroutine()
     {
+        if (acting)
+            yield break;
+
+        acting = true;
         float t = 0;
         while(t < 1)
         {
@@ -63,6 +76,7 @@ public class BreakableObject : MonoBehaviour
         objectColl.enabled = true;
         rb.useGravity = true;
         rb.detectCollisions = true;
+        acting = false;
     }
 
     private void DisableBreakablePartsCollisions()
