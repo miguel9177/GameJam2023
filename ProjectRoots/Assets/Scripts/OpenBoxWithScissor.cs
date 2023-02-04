@@ -8,7 +8,7 @@ public class OpenBoxWithScissor : MonoBehaviour
     public PlayerCursor cursor;
     public const string tagOfScissor = "Scissor";
     public const string tagOfBox = "Box";
-
+    public AudioClip boxCutOpenSound;
     private RaycastHit hit;
     private GrabableItem grabbedItem;
 
@@ -49,6 +49,8 @@ public class OpenBoxWithScissor : MonoBehaviour
 
         if(!grabbedItem.CompareTag(tagOfScissor)) return false;
 
+        if(hit.transform == null) return false;
+
         if (!hit.transform.CompareTag(tagOfBox)) return false;
 
         return true;
@@ -57,5 +59,6 @@ public class OpenBoxWithScissor : MonoBehaviour
     private void CutBoxOpen()
     {
         Debug.Log("OPENED BOX< SCRIPT BY TIAGO");
+        SoundManager.instance.PlaySound(boxCutOpenSound,1);
     }
 }
