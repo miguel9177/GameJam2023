@@ -60,6 +60,7 @@ public class PlayerCursor : MonoBehaviour
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance, grabableObjectMask))
         {
+            if(hit.transform.gameObject.layer == 3)
             cursor.sprite = cursorGreen;
         }
         else
