@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public Action<bool> OnBeginTimeTravel;
     //if false go to future, if true go to past
     public Action<bool> OnTimeTravel;
+    public Action OnForcedDropObject;
     #endregion
 
     private void Start()
@@ -62,4 +63,10 @@ public class GameManager : MonoBehaviour
         OnTimeTravel?.Invoke(isOnPast);
         isTimeTraveling = false;
     }
+
+    public void ForceDropObject()
+    {
+        OnForcedDropObject?.Invoke();
+    }
+    
 }
