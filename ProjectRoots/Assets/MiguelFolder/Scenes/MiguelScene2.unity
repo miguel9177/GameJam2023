@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToWaitForTimeTravelToFinish: 2.75
+  timeTravelCooldown: 2
   isOnPast: 1
 --- !u!114 &283312926
 MonoBehaviour:

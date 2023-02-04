@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public float timeToWaitForTimeTravelToFinish;
+    public float timeTravelCooldown = 2;
 
     public bool isOnPast;
     private bool isTimeTraveling = false;
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
         OnBeginTimeTravel?.Invoke(isOnPast);
         yield return new WaitForSeconds(timeToWaitForTimeTravelToFinish);
         OnTimeTravel?.Invoke(isOnPast);
+        yield return new WaitForSeconds(timeTravelCooldown);
         isTimeTraveling = false;
     }
 
