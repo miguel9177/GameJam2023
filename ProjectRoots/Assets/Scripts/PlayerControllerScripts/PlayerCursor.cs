@@ -23,6 +23,7 @@ public class PlayerCursor : MonoBehaviour
     #region Events
     public Action<GrabableItem> OnGrabbedItem;
     public Action OnDroppedItem;
+    public Action<RaycastHit> OnUpdateHitResults;
     #endregion
 
     // Start is called before the first frame update
@@ -64,7 +65,9 @@ public class PlayerCursor : MonoBehaviour
         else
         {
             cursor.sprite = cursorBlack;
-        }        
+        }
+
+        OnUpdateHitResults?.Invoke(hit);
     }
 
    
