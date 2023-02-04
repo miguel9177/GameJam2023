@@ -6,7 +6,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public float timeToWaitForTimeTravelToFinish;
+
     public bool isOnPast;
+    private bool isTimeTraveling = false;
 
     private void Awake()
     {
@@ -25,13 +28,21 @@ public class GameManager : MonoBehaviour
 
     #region Events
     //if false go to future, if true go to past
+    public Action<bool> OnBeginTimeTravel;
+    //if false go to future, if true go to past
     public Action<bool> OnTimeTravel;
     #endregion
 
     private void Start()
     {
-        InputManager.Instance.OnPressedR += TimeTravel;
+        InputManager.Instance.OnPressedR += OnPressedR;
         Invoke("LateStart", 0.1f);
+    }
+
+    private void OnPressedR()
+    {
+        
+        StartCoroutine(TimeTravel());
     }
 
     private void LateStart()
@@ -39,9 +50,16 @@ public class GameManager : MonoBehaviour
         OnTimeTravel?.Invoke(isOnPast);
     }
 
-    private void TimeTravel()
+    private IEnumerator TimeTravel()
     {
+        if (isTimeTraveling)
+            yield break;
+
+        isTimeTraveling = true;
         isOnPast = !isOnPast;
+        OnBeginTimeTravel?.Invoke(isOnPast);
+        yield return new WaitForSeconds(timeToWaitForTimeTravelToFinish);
         OnTimeTravel?.Invoke(isOnPast);
+        isTimeTraveling = false;
     }
 }
