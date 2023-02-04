@@ -23,6 +23,7 @@ public class InputManager : MonoBehaviour
 
     #region Events
     public Action OnPressedE = null;
+    public Action OnPressedR = null;
     #endregion
 
     private void Update()
@@ -30,6 +31,10 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             OnPressedE?.Invoke();
+        }
+        if(Input.GetKeyUp(KeyCode.R))
+        {
+            OnPressedR?.Invoke();
         }
     }
 }
