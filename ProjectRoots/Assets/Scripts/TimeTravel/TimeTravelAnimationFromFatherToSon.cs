@@ -76,6 +76,8 @@ public class TimeTravelAnimationFromFatherToSon : MonoBehaviour
     {
         fatherImage.transform.localPosition = imageInitPlayerLocalPositionAndRot.localPosition;
         fatherImage.transform.localRotation = imageInitPlayerLocalPositionAndRot.localRotation;
+        sonImage.transform.localPosition = imageInitPlayerLocalPositionAndRot.localPosition;
+        sonImage.transform.localRotation = imageInitPlayerLocalPositionAndRot.localRotation;
         sonImage.SetActive(false);
         fatherImage.SetActive(false);
     }
