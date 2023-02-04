@@ -46,6 +46,14 @@ public class GrabObjectsPhysics : MonoBehaviour
 
     private void GrabObject(GrabableItem item)
     {
+        if (item.gameObject.TryGetComponent(out ItemTimeline itemTimeLine) )
+        {
+            if (!itemTimeLine.isGrabbable) {
+
+                return;
+            
+            }
+        }
         state = State.GrabbingObject;
         currentGrabedItem = item;
         currentGrabedItem.rb.useGravity = false;
@@ -55,6 +63,9 @@ public class GrabObjectsPhysics : MonoBehaviour
 
     private void DropGrabedObject()
     {
+        if (currentGrabedItem == null)
+            return;
+
         state = State.idle;
         currentGrabedItem.rb.useGravity = true;
         for (int i = 0; i < currentGrabedItem.coll.Length; i++)
