@@ -21,10 +21,12 @@ public class GrabObjectsPhysics : MonoBehaviour
 
     private GrabableItem currentGrabedItem;
 
+
     private void Start()
     {
         playerCursor.OnGrabbedItem += GrabObject;
         playerCursor.OnDroppedItem += DropGrabedObject;
+        GameManager.Instance.OnForcedDropObject += DropGrabedObject;
     }
 
     private void FixedUpdate()
@@ -61,7 +63,7 @@ public class GrabObjectsPhysics : MonoBehaviour
             Physics.IgnoreCollision(currentGrabedItem.coll[i], playerCollider, true);
     }
 
-    private void DropGrabedObject()
+    public void DropGrabedObject()
     {
         if (currentGrabedItem == null)
             return;
