@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     //if false go to future, if true go to past
     public Action<bool> OnTimeTravel;
     public Action OnForcedDropObject;
+    public Action OnDropVaseAtBase;
     #endregion
 
     private void Start()
@@ -70,5 +71,10 @@ public class GameManager : MonoBehaviour
     {
         OnForcedDropObject?.Invoke();
     }
-    
+
+    public void DropVaseAtBase()
+    {
+        OnDropVaseAtBase?.Invoke();
+    }
+
 }

@@ -27,6 +27,7 @@ public class GrabObjectsPhysics : MonoBehaviour
         playerCursor.OnGrabbedItem += GrabObject;
         playerCursor.OnDroppedItem += DropGrabedObject;
         GameManager.Instance.OnForcedDropObject += DropGrabedObject;
+        GameManager.Instance.OnDropVaseAtBase += DropGrabedObject;
     }
 
     private void FixedUpdate()

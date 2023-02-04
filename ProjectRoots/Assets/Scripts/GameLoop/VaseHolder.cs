@@ -14,7 +14,7 @@ public class VaseHolder : MonoBehaviour
         if (other.gameObject.name == "Vase")
         {
             Debug.Log("Vase Hit");
-            GameManager.Instance.ForceDropObject();
+            GameManager.Instance.DropVaseAtBase();
             Vase.gameObject.transform.position = vaseHolder.transform.position;
             if(Vase.gameObject.TryGetComponent(out Rigidbody rb_))
             {
