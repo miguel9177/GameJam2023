@@ -1150,6 +1150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardbox
       objectReference: {fileID: 0}
+    - target: {fileID: 8745185782454461522, guid: 00cf428879bc3f748973eddc8fd18bff, type: 3}
+      propertyPath: m_TagString
+      value: Box
+      objectReference: {fileID: 0}
     - target: {fileID: 8745185782454461527, guid: 00cf428879bc3f748973eddc8fd18bff, type: 3}
       propertyPath: m_RootOrder
       value: 8

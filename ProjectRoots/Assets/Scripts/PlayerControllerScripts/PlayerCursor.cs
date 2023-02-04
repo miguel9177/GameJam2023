@@ -23,6 +23,7 @@ public class PlayerCursor : MonoBehaviour
     #region Events
     public Action<GrabableItem> OnGrabbedItem;
     public Action OnDroppedItem;
+    public Action<RaycastHit> OnUpdateHitResults;
     #endregion
 
     // Start is called before the first frame update
@@ -59,12 +60,15 @@ public class PlayerCursor : MonoBehaviour
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance, grabableObjectMask))
         {
+            if(hit.transform.gameObject.layer == 3)
             cursor.sprite = cursorGreen;
         }
         else
         {
             cursor.sprite = cursorBlack;
-        }        
+        }
+
+        OnUpdateHitResults?.Invoke(hit);
     }
 
    
