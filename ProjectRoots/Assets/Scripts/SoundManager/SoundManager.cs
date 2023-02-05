@@ -6,6 +6,8 @@ using UnityEngine.Rendering;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
+    
+
 
     [SerializeField] private AudioSource musicSource_ , effectsSource_;
     private void Awake()
@@ -25,10 +27,12 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         musicSource_.Play();
+        Debug.Log(MainMenu.musicVolume);
+        musicSource_.volume = MainMenu.musicVolume;
     }    
 
     public void PlaySound(AudioClip clip, float volumeScale)
     {
-        effectsSource_.PlayOneShot(clip, volumeScale);
+        effectsSource_.PlayOneShot(clip, MainMenu.vfxVolume);
     }
 }

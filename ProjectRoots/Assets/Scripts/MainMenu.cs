@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject mainCanvas;
     public GameObject settingsCanvas;
     public GameObject controlsCanvas;
-    // Start is called before the first frame update
+    public GameObject historyCanvas;
 
+    public GameObject musicScrollbar;
+    public GameObject vfxScrollbar;
 
-    private void Start()
-    {
-        //SoundManager.instance.PlaySound(,1f)
-    }
-
+    public static float vfxVolume;
+    public static float musicVolume;
 
     public void Play()
     {
@@ -33,12 +32,38 @@ public class MainMenu : MonoBehaviour
     public void Back()
     {
         settingsCanvas.SetActive(false);
+        controlsCanvas.SetActive(false);
+        historyCanvas.SetActive(false);
         mainCanvas.SetActive(true);
+        
     }
 
     public void OpenSettings()
     {
         settingsCanvas.SetActive(true);
         mainCanvas.SetActive(false);
+    }
+
+    public void OpenControls()
+    {
+        controlsCanvas.SetActive(true);
+        mainCanvas.SetActive(false);
+    }
+
+    public void openHistory()
+    {
+        historyCanvas.SetActive(true);
+        mainCanvas.SetActive(false);
+    }
+
+    public void changeMusicScrollbar()
+    {
+        Debug.Log(musicVolume);
+        musicVolume = musicScrollbar.GetComponent<Scrollbar>().value;
+    }
+
+    public void changeVFXScrollbar() { 
+        vfxVolume= vfxScrollbar.GetComponent<Scrollbar>().value;
+        //Debug.Log(vfxVolume);
     }
 }
