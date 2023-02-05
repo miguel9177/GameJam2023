@@ -18,10 +18,22 @@ public class BreakableObject : MonoBehaviour
     public float assembleSpeed = 1;
     public List<BreakableParts> allBreakableParts;
     public Collider objectColl;
+    public Collider objectToDestroyVase;
+    public AudioClip audioToPlayOnBreak;
+    public float audioVolume;
+    public bool loseGameAtBreak = false;
+
+    private bool acting = false;
 
     private void Start()
     {
         DisableBreakablePartsCollisions();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider == objectToDestroyVase)
+            BreakObject();
     }
 
     [ContextMenu("BreakObject")]
@@ -33,6 +45,10 @@ public class BreakableObject : MonoBehaviour
         objectColl.enabled = false;
         StoreBreakablePartPos();
         EnableBreakablePartsCollisions();
+        SoundManager.instance.PlaySound(audioToPlayOnBreak, audioVolume);
+
+        if (loseGameAtBreak)
+            Invoke("CallLoseGame", 1);
 
     }
 
@@ -46,6 +62,10 @@ public class BreakableObject : MonoBehaviour
 
     private IEnumerator AssembleObjectCoroutine()
     {
+        if (acting)
+            yield break;
+
+        acting = true;
         float t = 0;
         while(t < 1)
         {
@@ -63,6 +83,12 @@ public class BreakableObject : MonoBehaviour
         objectColl.enabled = true;
         rb.useGravity = true;
         rb.detectCollisions = true;
+        acting = false;
+    }
+
+    private void CallLoseGame()
+    {
+        GameManager.Instance.LostGame();
     }
 
     private void DisableBreakablePartsCollisions()

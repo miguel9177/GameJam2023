@@ -2,12 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public float timeToWaitForTimeTravelToFinish;
     public float timeTravelCooldown = 2;
+    public Image loseScreenPanel;
+    public Image winScreenPanel;
+    public string menuSceneName;
 
     public bool isOnPast;
     private bool isTimeTraveling = false;
@@ -77,4 +82,31 @@ public class GameManager : MonoBehaviour
         OnDropVaseAtBase?.Invoke();
     }
 
+    public void LostGame()
+    {
+        loseScreenPanel.gameObject.SetActive(true);
+        PlayerMovement.stopWorking = true;
+        PlayerCamera.stopWorking = true;
+        StartCoroutine(RestartScene());
+    }
+
+    public void WonGame()
+    {
+        winScreenPanel.gameObject.SetActive(true);
+        PlayerMovement.stopWorking = true;
+        PlayerCamera.stopWorking = true;
+        StartCoroutine(GoToMenu());
+    }
+
+    private IEnumerator RestartScene()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private IEnumerator GoToMenu()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(menuSceneName);
+    }
 }
