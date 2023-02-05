@@ -11,6 +11,9 @@ public class GameLoopManager : MonoBehaviour
     public GameObject table;
     public Rigidbody tableDoor;
     public GrabableItem scissor;
+    public MeshFilter cardBoxMesh;
+    public Mesh meshToSwitchTo;
+    public Vector3 eulerAnglesOfOpenBox;
     
     public bool boxIsInPlace;
     //public ItemTimelineManager itemTimelineManager;
@@ -108,5 +111,12 @@ public class GameLoopManager : MonoBehaviour
         {
             scissor.coll[i].enabled = true;
         }
+    }
+
+    public void OpenCardBox()
+    {
+        cardBoxMesh.mesh = meshToSwitchTo;
+        cardBoxMesh.transform.eulerAngles = eulerAnglesOfOpenBox;
+        cardBoxMesh.gameObject.layer = 0;
     }
 }

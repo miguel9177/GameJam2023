@@ -78,6 +78,7 @@ public class InteractionsWithBoxAndFlower : MonoBehaviour
     {
         Debug.Log("OPENED BOX< SCRIPT BY TIAGO");
         SoundManager.instance.PlaySound(boxCutOpenSound,1);
+        GameLoopManager.Instance.OpenCardBox();
     }
 
     private void WaterFlower()
