@@ -8,6 +8,7 @@ public class CameraAnimation : MonoBehaviour
     public float animationZoomSpeed;
     public Transform cameraDestinationTransform;
     public Camera cam;
+    public float animationWaitTime;
 
     private bool animating = false;
     
@@ -47,7 +48,7 @@ public class CameraAnimation : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(animationWaitTime);
         PlayerCamera.stopWorking = false;
         PlayerMovement.stopWorking = false;
         animating = false;

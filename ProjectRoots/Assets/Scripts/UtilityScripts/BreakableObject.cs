@@ -19,6 +19,9 @@ public class BreakableObject : MonoBehaviour
     public List<BreakableParts> allBreakableParts;
     public Collider objectColl;
     public Collider objectToDestroyVase;
+    public AudioClip audioToPlayOnBreak;
+    public float audioVolume;
+    public bool loseGameAtBreak = false;
 
     private bool acting = false;
 
@@ -42,6 +45,10 @@ public class BreakableObject : MonoBehaviour
         objectColl.enabled = false;
         StoreBreakablePartPos();
         EnableBreakablePartsCollisions();
+        SoundManager.instance.PlaySound(audioToPlayOnBreak, audioVolume);
+
+        if (loseGameAtBreak)
+            Invoke("CallLoseGame", 1);
 
     }
 
@@ -77,6 +84,11 @@ public class BreakableObject : MonoBehaviour
         rb.useGravity = true;
         rb.detectCollisions = true;
         acting = false;
+    }
+
+    private void CallLoseGame()
+    {
+        GameManager.Instance.LostGame();
     }
 
     private void DisableBreakablePartsCollisions()
