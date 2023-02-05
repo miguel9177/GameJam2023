@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
     #region Events
     public Action OnPressedE = null;
     public Action OnPressedR = null;
+    public Action OnPressedEscape = null;
     public Action OnPressedMouseLeftClick = null;
     
     #endregion
@@ -38,7 +39,11 @@ public class InputManager : MonoBehaviour
         {
             OnPressedR?.Invoke();
         }
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            OnPressedEscape?.Invoke();
+        }
+        if (Input.GetMouseButtonDown(0))
         {
             OnPressedMouseLeftClick?.Invoke();
         }
