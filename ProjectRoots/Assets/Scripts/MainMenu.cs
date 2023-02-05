@@ -14,8 +14,8 @@ public class MainMenu : MonoBehaviour
     public GameObject musicScrollbar;
     public GameObject vfxScrollbar;
 
-    public static float vfxVolume;
-    public static float musicVolume;
+    public static float vfxVolume = 1f;
+    public static float musicVolume = 1f;
 
     public void Play()
     {

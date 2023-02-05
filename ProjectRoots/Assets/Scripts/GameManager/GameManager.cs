@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
         isOnPast = !isOnPast;
         OnBeginTimeTravel?.Invoke(isOnPast);
         yield return new WaitForSeconds(timeToWaitForTimeTravelToFinish);
+        ForceDropObject();
         OnTimeTravel?.Invoke(isOnPast);
         yield return new WaitForSeconds(timeTravelCooldown);
         isTimeTraveling = false;
