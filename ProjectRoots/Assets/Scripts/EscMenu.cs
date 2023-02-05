@@ -23,6 +23,7 @@ public class EscMenu : MonoBehaviour
 
     private void OnPressedEscape()
     {
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible= true;
         escMenu.gameObject.SetActive(!escMenu.isActiveAndEnabled);
         canvas.gameObject.SetActive(!canvas.isActiveAndEnabled);
