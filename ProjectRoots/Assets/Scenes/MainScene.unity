@@ -823,6 +823,7 @@ MonoBehaviour:
   rotOfObjectWhenGrabbingIt: {x: 0, y: 0, z: 0}
   freezeAxisPosition: {x: 0, y: 1, z: 1}
   freezeRotation: 1
+  lockPositions: {fileID: 292188198}
 --- !u!54 &292188197
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -839,6 +840,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &292188198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292188192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 715d494677f2edc4aa1c3da93f8998dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockXPos: 1
+  blockYPos: 0
+  blockZPos: 0
+  xPosLimiter: {x: -9.27, y: 16.93}
+  yPosLimiter: {x: 0, y: 0}
+  zPosLimiter: {x: 0, y: 0}
 --- !u!4 &295757265 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2100204521017086989, guid: c32f930995a66c94bbafcd3c218e7c5a, type: 3}
@@ -3970,6 +3989,7 @@ MonoBehaviour:
   rotOfObjectWhenGrabbingIt: {x: 0, y: 0, z: 0}
   freezeAxisPosition: {x: 0, y: 1, z: 1}
   freezeRotation: 1
+  lockPositions: {fileID: 0}
 --- !u!114 &1640473099
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -83,7 +83,11 @@ public class GrabObjectsPhysics : MonoBehaviour
     {
         Vector3 newPos = Vector3.Lerp(currentGrabedItem.transform.position, playerGrabLocation.transform.position, Time.deltaTime * objectMovementSpeed);
 
-        if(currentGrabedItem.freezeAxisPosition.x != 0)
+        bool lockXPos = false;
+        bool lockYPos = false;
+        bool lockZPos = false;
+
+        if (currentGrabedItem.freezeAxisPosition.x != 0)
         {
             newPos.x = currentGrabedItem.transform.position.x;
         }
@@ -96,10 +100,56 @@ public class GrabObjectsPhysics : MonoBehaviour
             newPos.z = currentGrabedItem.transform.position.z;
         }
 
-        currentGrabedItem.rb.MovePosition(newPos);
+        if(currentGrabedItem.lockPositions != null)
+        {
+            if(currentGrabedItem.lockPositions.blockXPos)
+            {
+                lockXPos = LockXPos(newPos);
+            }
+            if (currentGrabedItem.lockPositions.blockYPos)
+            {
+                lockYPos = LockYPos(newPos);
+            }
+            if (currentGrabedItem.lockPositions.blockZPos)
+            {
+                lockZPos = LockZPos(newPos);
+            }
+        }
+
+        if (lockXPos || lockYPos || lockZPos)
+            Debug.Log("LOCK OBJECT");
+        else
+            currentGrabedItem.rb.MovePosition(newPos);
 
         if(!currentGrabedItem.freezeRotation)
             currentGrabedItem.rb.MoveRotation(Quaternion.LookRotation(playerCam.transform.forward) * Quaternion.Euler(currentGrabedItem.rotOfObjectWhenGrabbingIt));
+    }
+
+    private bool LockXPos(Vector3 newPos)
+    {
+        if(newPos.x < currentGrabedItem.lockPositions.xPosLimiter.x || newPos.x > currentGrabedItem.lockPositions.xPosLimiter.y)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool LockYPos(Vector3 newPos)
+    {
+        if (newPos.y < currentGrabedItem.lockPositions.yPosLimiter.x || newPos.y > currentGrabedItem.lockPositions.yPosLimiter.y)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool LockZPos(Vector3 newPos)
+    {
+        if (newPos.z < currentGrabedItem.lockPositions.zPosLimiter.x || newPos.z > currentGrabedItem.lockPositions.zPosLimiter.y)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void DeactivateColliderAtGrab()

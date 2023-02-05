@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerMovement.stopWorking = false;
+        PlayerCamera.stopWorking = false;
         InputManager.Instance.OnPressedR += OnPressedR;
         Invoke("LateStart", 0.1f);
     }
@@ -101,7 +103,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator RestartScene()
     {
         yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
     private IEnumerator GoToMenu()

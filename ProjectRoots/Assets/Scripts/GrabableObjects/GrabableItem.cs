@@ -11,5 +11,6 @@ public class GrabableItem : MonoBehaviour
     [Header("Put this to diferent then 0 to be able to freeze the specific axis")]
     public Vector3 freezeAxisPosition = Vector3.zero;
     public bool freezeRotation = false;
-    
+    [Header("This can be null")]
+    public LockPositions lockPositions = null;
 }
