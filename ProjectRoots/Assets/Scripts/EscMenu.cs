@@ -2,11 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EscMenu : MonoBehaviour
 {
     public Canvas escMenu;
     public Canvas canvas;
+
+    public Button restart;
+
     private bool pressedEsc_1;
     private bool pressedEsc_2;
 
@@ -18,6 +23,7 @@ public class EscMenu : MonoBehaviour
 
     private void OnPressedEscape()
     {
+        Cursor.visible= true;
         escMenu.gameObject.SetActive(!escMenu.isActiveAndEnabled);
         canvas.gameObject.SetActive(!canvas.isActiveAndEnabled);
         if (escMenu.isActiveAndEnabled)
@@ -27,8 +33,14 @@ public class EscMenu : MonoBehaviour
         }
         else
         {
+            Cursor.visible = false;
             PlayerCamera.stopWorking = false;
             PlayerMovement.stopWorking = false;
         }           
-    }    
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
