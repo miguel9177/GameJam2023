@@ -76,14 +76,12 @@ public class InteractionsWithBoxAndFlower : MonoBehaviour
 
     private void CutBoxOpen()
     {
-        Debug.Log("OPENED BOX< SCRIPT BY TIAGO");
         SoundManager.instance.PlaySound(boxCutOpenSound,1);
         GameLoopManager.Instance.OpenCardBox();
     }
 
     private void WaterFlower()
     {
-        Debug.Log("Water Flower< SCRIPT BY TIAGO");
-        //SoundManager.instance.PlaySound(boxCutOpenSound, 1);
+        GameLoopManager.Instance.WaterFlower();
     }
 }

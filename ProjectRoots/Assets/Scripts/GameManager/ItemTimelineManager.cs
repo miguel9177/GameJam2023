@@ -9,7 +9,7 @@ public class ItemTimelineManager : MonoBehaviour
 {
     public static ItemTimelineManager Instance { get; private set; }
 
-    public ItemTimeline[] interactableObjects;
+    public List<ItemTimeline> interactableObjects = new List<ItemTimeline>();
    
     public class PastObjects
     {
@@ -52,7 +52,7 @@ public class ItemTimelineManager : MonoBehaviour
         GameManager.Instance.OnTimeTravel += TimeTraveled;
 
 
-        for (int i = 0; i < interactableObjects.Length; i++)
+        for (int i = 0; i < interactableObjects.Count; i++)
         {
             if (interactableObjects[i].timeline == ItemTimeline.Timeline.Future)
             {

@@ -14,8 +14,16 @@ public class GameLoopManager : MonoBehaviour
     public MeshFilter cardBoxMesh;
     public Mesh meshToSwitchTo;
     public Vector3 eulerAnglesOfOpenBox;
-    
+    public MeshRenderer dirtMesh;
+    public Color colorOfWater;
+    [Header("Prefab from project")]
+    public GrabableItem bigFlowerInInactiveParent;
+    public Transform posToSpawnFlower;
+    public Rigidbody rbOfStoolInsideCardBox;
+    public Transform posOfStoolInsideCardBox;
     public bool boxIsInPlace;
+    public bool isFlowerWatered;
+    public bool isBigFlowerSpawn = false;
     //public ItemTimelineManager itemTimelineManager;
 
     private void Awake()
@@ -45,9 +53,20 @@ public class GameLoopManager : MonoBehaviour
     {
         if (!isOnPast) //if we're changing to past
         {
+            
+            if (isFlowerWatered && !isBigFlowerSpawn)
+            {
+                isBigFlowerSpawn = true;
+                bigFlowerInInactiveParent.transform.parent = null;
+                for (int i = 0; i < bigFlowerInInactiveParent.coll.Length; i++)
+                    bigFlowerInInactiveParent.coll[i].enabled = true;
+
+                bigFlowerInInactiveParent.rb.isKinematic = false;
+                bigFlowerInInactiveParent.rb.useGravity = true;
+            }
             if (boxIsInPlace) //if box is in place
             {
-                
+             
                 return; //ignore it
             }
             else
@@ -55,6 +74,7 @@ public class GameLoopManager : MonoBehaviour
                 ReturnFutureItemsToStartingPlace(); //
             }
 
+          
 
         }
     }
@@ -115,8 +135,24 @@ public class GameLoopManager : MonoBehaviour
 
     public void OpenCardBox()
     {
+        rbOfStoolInsideCardBox.transform.parent = null;
+        rbOfStoolInsideCardBox.transform.position = posOfStoolInsideCardBox.position;
+        rbOfStoolInsideCardBox.transform.rotation = posOfStoolInsideCardBox.rotation;
+        rbOfStoolInsideCardBox.isKinematic = false;
+        rbOfStoolInsideCardBox.useGravity = true;
+        rbOfStoolInsideCardBox.transform.parent = null;
+        Collider collOfBox = rbOfStoolInsideCardBox.gameObject.GetComponent<Collider>();
+        collOfBox.enabled = true;
+        Physics.IgnoreCollision(collOfBox, cardbox.gameObject.GetComponent<Collider>());
         cardBoxMesh.mesh = meshToSwitchTo;
+        cardbox.gameObject.layer = 0;
         cardBoxMesh.transform.eulerAngles = eulerAnglesOfOpenBox;
         cardBoxMesh.gameObject.layer = 0;
+    }
+
+    public void WaterFlower()
+    {
+        dirtMesh.material.color = colorOfWater;
+        isFlowerWatered = true;
     }
 }
