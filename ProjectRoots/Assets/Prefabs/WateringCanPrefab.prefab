@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 2100204521017086183}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2100204521013653313
 Rigidbody:
@@ -66,6 +66,10 @@ MonoBehaviour:
   rb: {fileID: 2100204521013653313}
   coll:
   - {fileID: 2100204520975183175}
+  deactivateColliderAtGrab: 1
+  rotOfObjectWhenGrabbingIt: {x: 0, y: 0, z: 0}
+  freezeAxisPosition: {x: 0, y: 0, z: 0}
+  freezeRotation: 0
 --- !u!114 &2100204521003240361
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,7 +17,8 @@ public class VaseHolder : MonoBehaviour
             Debug.Log("Vase Hit");
             GameManager.Instance.DropVaseAtBase();
             Vase.gameObject.transform.position = vaseHolder.transform.position;
-            if(Vase.gameObject.TryGetComponent(out Rigidbody rb_))
+            Vase.gameObject.transform.rotation = vaseHolder.transform.rotation;
+            if (Vase.gameObject.TryGetComponent(out Rigidbody rb_))
             {
                 rb_.velocity = new Vector3(0f, 0f, 0f);
                 rb_.angularVelocity = new Vector3(0f, 0f, 0f);
