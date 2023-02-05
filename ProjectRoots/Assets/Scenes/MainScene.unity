@@ -734,8 +734,8 @@ MonoBehaviour:
   playerSonScale: {x: 2, y: 2, z: 2}
   playerFatherSpeed: 10
   playerSonSpeed: 5
-  playerFatherJumpForce: 10
-  playerSonJumpForce: 10
+  playerFatherJumpForce: 15
+  playerSonJumpForce: 12
   playerFatherHeight: 6
   playerSonHeight: 4.5
   playerFatherGrabableRange: 7
@@ -3220,7 +3220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 65
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1133820028
 Transform:
   m_ObjectHideFlags: 0

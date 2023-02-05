@@ -97,8 +97,8 @@ public class GameLoopManager : MonoBehaviour
                 {
                     ItemTimelineManager.Instance.futureObjects[i].rigidBody.velocity = new Vector3(0f, 0f, 0f);
                 }
-                ItemTimelineManager.Instance.futureObjects[i].itemTimeline.gameObject.transform.position = ItemTimelineManager.Instance.futureObjects[i].initPos;
-                ItemTimelineManager.Instance.futureObjects[i].itemTimeline.gameObject.transform.rotation = ItemTimelineManager.Instance.futureObjects[i].initRot;
+                ItemTimelineManager.Instance.futureObjects[i].itemTimeline.gameObject.transform.localPosition = ItemTimelineManager.Instance.futureObjects[i].initPos;
+                ItemTimelineManager.Instance.futureObjects[i].itemTimeline.gameObject.transform.localRotation = ItemTimelineManager.Instance.futureObjects[i].initRot;
                 ItemTimelineManager.Instance.futureObjects[i].itemTimeline = ItemTimelineManager.Instance.futureObjects[i].itemTimeline;
 
                 // Debug.Log("Item: " + itemTimelineManager.interactableObjects[i]);

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ItemTimelineManager : MonoBehaviour
@@ -57,8 +55,8 @@ public class ItemTimelineManager : MonoBehaviour
             if (interactableObjects[i].timeline == ItemTimeline.Timeline.Future)
             {
                 FutureObjects a = new FutureObjects();
-                a.initPos = interactableObjects[i].transform.position;
-                a.initRot = interactableObjects[i].transform.rotation;
+                a.initPos = interactableObjects[i].transform.localPosition;
+                a.initRot = interactableObjects[i].transform.localRotation;
                 a.itemTimeline = interactableObjects[i];
                 if (interactableObjects[i].gameObject.TryGetComponent(out Rigidbody rb_))
                 {
@@ -70,8 +68,8 @@ public class ItemTimelineManager : MonoBehaviour
             }else if (interactableObjects[i].timeline == ItemTimeline.Timeline.Past)
             {
                 PastObjects a = new PastObjects();
-                a.initLocalPos = interactableObjects[i].transform.position;
-                a.initLocalRot = interactableObjects[i].transform.rotation;
+                a.initLocalPos = interactableObjects[i].transform.localPosition;
+                a.initLocalRot = interactableObjects[i].transform.localRotation;
                 a.itemTimeline = interactableObjects[i];
                 if (interactableObjects[i].gameObject.TryGetComponent(out Rigidbody rb_))
                 {
