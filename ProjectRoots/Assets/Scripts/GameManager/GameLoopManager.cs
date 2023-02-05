@@ -8,6 +8,10 @@ public class GameLoopManager : MonoBehaviour
 {
     public static GameLoopManager Instance { get; private set; }
     public OnTriggerEnterSendEvent cardbox;
+    public GameObject table;
+    public Rigidbody tableDoor;
+    public GrabableItem scissor;
+    
     public bool boxIsInPlace;
     //public ItemTimelineManager itemTimelineManager;
 
@@ -87,5 +91,22 @@ public class GameLoopManager : MonoBehaviour
     {
         Debug.Log("Box is no longer in Place");
         boxIsInPlace = false;
+    }
+
+    public void OpenTable()
+    {
+        tableDoor.isKinematic = false;
+        tableDoor.useGravity = true;
+        tableDoor.transform.parent = null;
+        table.gameObject.layer = LayerMask.NameToLayer("Default");
+      
+
+        scissor.rb.isKinematic = false;
+        scissor.rb.useGravity = true;
+
+        for (int i = 0; i < scissor.coll.Length; i++)
+        {
+            scissor.coll[i].enabled = true;
+        }
     }
 }

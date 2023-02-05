@@ -22,6 +22,7 @@ public class BreakableObject : MonoBehaviour
     public AudioClip audioToPlayOnBreak;
     public float audioVolume;
     public bool loseGameAtBreak = false;
+    [HideInInspector] public bool isBroken = false;
 
     private bool acting = false;
 
@@ -46,6 +47,7 @@ public class BreakableObject : MonoBehaviour
         StoreBreakablePartPos();
         EnableBreakablePartsCollisions();
         SoundManager.instance.PlaySound(audioToPlayOnBreak, audioVolume);
+        isBroken = true;
 
         if (loseGameAtBreak)
             Invoke("CallLoseGame", 1);
