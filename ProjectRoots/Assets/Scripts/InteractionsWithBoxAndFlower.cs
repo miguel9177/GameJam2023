@@ -10,7 +10,10 @@ public class InteractionsWithBoxAndFlower : MonoBehaviour
     public const string tagOfBox = "Box";
     public const string tagOfWateringCan = "WateringCan";
     public const string tagOfFlower = "Flower";
+    public const string tagOfVase = "Vase";
+    public const string tagOfBigFlower = "BigFlower";
     public AudioClip boxCutOpenSound;
+    public AudioClip WateringSound;
     private RaycastHit hit;
     private GrabableItem grabbedItem;
 
@@ -45,7 +48,25 @@ public class InteractionsWithBoxAndFlower : MonoBehaviour
             CutBoxOpen();
         if (IsConditionsMetToWaterFlower())
             WaterFlower();
+        if (IsConditionsMetToPutFlowerInVase())
+            PutFlowerInVase();
     }
+
+
+
+    private bool IsConditionsMetToPutFlowerInVase()
+    {
+        if (grabbedItem == null) return false;
+
+        if (!grabbedItem.CompareTag(tagOfBigFlower)) return false;
+
+        if (hit.transform == null) return false;
+
+        if (!hit.transform.CompareTag(tagOfVase)) return false;
+
+        return true;
+    }
+
     private bool IsConditionsMetToOpenBox()
     {
         if(grabbedItem == null) return false;
@@ -83,5 +104,11 @@ public class InteractionsWithBoxAndFlower : MonoBehaviour
     private void WaterFlower()
     {
         GameLoopManager.Instance.WaterFlower();
+        SoundManager.instance.PlaySound(WateringSound, 1);
+    }
+
+    private void PutFlowerInVase()
+    {
+        GameLoopManager.Instance.PutFlowerInVase();
     }
 }

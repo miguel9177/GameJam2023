@@ -21,6 +21,8 @@ public class GameLoopManager : MonoBehaviour
     public Transform posToSpawnFlower;
     public Rigidbody rbOfStoolInsideCardBox;
     public Transform posOfStoolInsideCardBox;
+    public Transform vaseFlowerPosAndRot;
+    public GameObject vase;
     public bool boxIsInPlace;
     public bool isFlowerWatered;
     public bool isBigFlowerSpawn = false;
@@ -154,5 +156,16 @@ public class GameLoopManager : MonoBehaviour
     {
         dirtMesh.material.color = colorOfWater;
         isFlowerWatered = true;
+        
+    }
+
+    public void PutFlowerInVase()
+    {
+        bigFlowerInInactiveParent.transform.parent = vase.transform;
+        bigFlowerInInactiveParent.transform.position = vaseFlowerPosAndRot.position;
+        bigFlowerInInactiveParent.transform.rotation = vaseFlowerPosAndRot.rotation;
+
+        GameManager.Instance.ForceDropObject();
+        GameManager.Instance.WonGame();
     }
 }
